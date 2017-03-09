@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:layout_centerVertical="true"
+        android:layout_alignEnd="@+id/nametext"
+        android:id="@+id/passtext"
+        android:text="password"
+        android:background="@android:color/background_light" />
+
+    <CheckBox
+        android:text="stay logged in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:id="@+id/savecheckbox"
+        android:layout_below="@+id/passtext"
+        android:layout_centerHorizontal="true"
+        android:checked="false" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/nametext"
+        android:background="@android:color/background_light"
+        android:layout_height="35dp"
+        android:layout_above="@+id/passtext"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp" />
+
+    <Button
+        android:text="Log In"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/login"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Create User"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/savecheckbox"
+        android:layout_alignEnd="@+id/passtext"
+        android:layout_marginTop="12dp"
+        android:id="@+id/createnew"
+        android:background="@android:color/transparent"
+        android:textColor="@android:color/holo_blue_dark" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/nametext"
+        android:layout_toStartOf="@+id/createnew"
+        android:layout_marginBottom="61dp"
+        android:id="@+id/errorlogin" />
+
+</RelativeLayout>
