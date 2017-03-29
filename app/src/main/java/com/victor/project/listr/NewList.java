@@ -2,6 +2,7 @@ package com.victor.project.listr;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,8 @@ String username;
     Intent intent;
     ArrayList<String> list = new ArrayList<>();
     EditText headtext;
+    LinearLayout linearLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,20 +34,20 @@ String username;
         final String users_headers = username.concat("~headers");
         final String users_tables = username.concat("~tables");
         headtext = (EditText) findViewById(R.id.header);
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearnewlist);
-        for(; i<=6; i++ )
+        linearLayout = (LinearLayout) findViewById(R.id.linearnewlist);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            makeitem();
+
+            }
+        });
+
+        for(int j =i; j<=6; j++ )
         {
-            final EditText editText= new EditText(getApplicationContext());
-            editText.setTextColor(0xff000000);
-            editText.setBackgroundColor(0xffffffff);
-            editText.setInputType(96);
-            LinearLayout.LayoutParams llp =new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-            llp.setMargins(0,5,0,5);
-            editText.setLayoutParams(llp);
-            editText.setId(i);
-            linearLayout.addView(editText);
+            makeitem();
         }
 
         final Button button= new Button(getApplicationContext());
@@ -79,5 +82,20 @@ String username;
         });
         linearLayout.addView(button);
 
+    }
+    public void makeitem(){
+
+        final EditText editText= new EditText(getApplicationContext());
+        editText.setTextColor(0xff000000);
+        editText.setBackgroundColor(0xffffffff);
+        editText.setInputType(96);
+        LinearLayout.LayoutParams llp =new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        llp.setMargins(0,5,0,5);
+        editText.setLayoutParams(llp);
+        editText.setId(i);
+        linearLayout.addView(editText);
+        i++;
     }
 }
