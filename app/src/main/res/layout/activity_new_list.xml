@@ -1,31 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearnewlist"
-    android:orientation="vertical"
+
+    tools:context="com.victor.project.listr.NewList"
+    android:id="@+id/newlistRL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    tools:context="com.victor.project.listr.NewList">
-
-
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+    <Button
+        android:text="+"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addRow"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="addItem" />
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Header"
+        android:text="Name"
         android:ems="10"
         android:id="@+id/header"
-        android:textSize="36sp"
-        android:textAlignment="center" />
-
-    <android.support.design.widget.FloatingActionButton
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/scrollView1"
+        android:layout_below="@+id/addRow"
+        android:layout_alignParentStart="true"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/savebtn">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/scrolllayout" >
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:text="Save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        app:fabSize="mini"
-        app:srcCompat="@android:drawable/arrow_down_float"
-        android:id="@+id/fab2" />
-
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:id="@+id/savebtn"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

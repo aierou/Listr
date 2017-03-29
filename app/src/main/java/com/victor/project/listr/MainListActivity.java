@@ -36,10 +36,9 @@ public class MainListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_list);
 
-         ll = (LinearLayout) findViewById(R.id.linear1);
+         ll = (LinearLayout) findViewById(R.id.nlinear1);
         lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
-        //buttons[] = ()
         SharedPreferences preferences = getSharedPreferences("share",0);
         sEditor = preferences.edit();
         final Intent intent = getIntent();
@@ -48,7 +47,6 @@ public class MainListActivity extends AppCompatActivity {
         i=0;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,41 +54,62 @@ public class MainListActivity extends AppCompatActivity {
                 Intent newl = new Intent(MainListActivity.this, NewList.class);
                 newl.putExtra("username",intent.getStringExtra("username"));
                 startActivity(newl);
-
             }
         });
 
         ChildEventListener imageListener = new ChildEventListener() {
-
-
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 String header = dataSnapshot.getKey();
+                final LinearLayout hll = new LinearLayout(getApplicationContext());
 
+                hll.setOrientation(LinearLayout.HORIZONTAL);
+                hll.setLayoutParams(lp);
                 final Button button= new Button(getApplicationContext());
                 button.setText(header);
                 button.setLayoutParams(new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
+                        ViewGroup.LayoutParams.WRAP_CONTENT,1.0f));
                 button.setId(i);
+
                 button.setOnClickListener(new View.OnClickListener() {
 
 
                     @Override
                     public void onClick(View v) {
-
-
                     String head = button.getText().toString();
                         Intent viewlist = new Intent(MainListActivity.this,ViewAList.class);
                         viewlist.putExtra("header",head);
                         viewlist.putExtra("username",intent.getStringExtra("username"));
                         startActivity(viewlist);
 
-
                     }
                 });
-                ll.addView(button);
+                final Button delbutton= new Button(getApplicationContext());
+                delbutton.setText("X");
+                delbutton.setLayoutParams(new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT,1.0f));
+                delbutton.setMinimumWidth(25);
+
+                delbutton.setId(-i);
+                delbutton.setOnClickListener(new View.OnClickListener() {
+
+
+                    @Override
+                    public void onClick(View v) {
+                        int j = -delbutton.getId();
+                        Button tbut = (Button) findViewById(j);
+                        String head = tbut.getText().toString();
+                        database1.child(username).child(head).removeValue();
+                        hll.removeView(tbut);
+                        hll.removeView(delbutton);
+                    }
+                });
+                hll.addView(button);
+                hll.addView(delbutton);
+                ll.addView(hll);
                 i++;
             }
 
@@ -118,8 +137,6 @@ public class MainListActivity extends AppCompatActivity {
         };
 
         database1.child(username).addChildEventListener(imageListener);
-
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -141,5 +158,4 @@ public class MainListActivity extends AppCompatActivity {
 
         }
     }
-
 }
