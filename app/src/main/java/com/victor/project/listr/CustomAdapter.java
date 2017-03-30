@@ -14,12 +14,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class CustomAdapter extends BaseAdapter implements ListAdapter {
-    private ArrayList<List> list = new ArrayList<List>();
+    private ArrayList<ListEntity> list = new ArrayList<ListEntity>();
     private Context context;
 
 
 
-    public CustomAdapter(ArrayList<List> list, Context context) {
+    public CustomAdapter(ArrayList<ListEntity> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -63,8 +63,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
                         public void onClick(DialogInterface dialog, int which){
                             switch(which){
                                 case DialogInterface.BUTTON_POSITIVE:
-                                    Globals.database.child(Globals.username+"~headers")
-                                            .child(list.get(position).getId()).removeValue();
+                                    Globals.deleteList(list.get(position).getId());
 
                                     list.remove(position);
                                     //Also need to update database

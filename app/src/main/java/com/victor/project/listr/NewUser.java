@@ -78,7 +78,7 @@ public class NewUser extends AppCompatActivity {
                     return;
                 }
 
-                mdatabase.child("~AllUsers").child(name).addListenerForSingleValueEvent(usernameListener);
+                mdatabase.child("Users").child(name).addListenerForSingleValueEvent(usernameListener);
 
 
             }
@@ -88,8 +88,8 @@ public class NewUser extends AppCompatActivity {
     }
 
     public void doTheThings(){
-        mdatabase.child("~AllUsers").child(name).setValue(pass1);
-        mdatabase.child(name).child(name).setValue(pass1);
+        User user = new User(pass1);
+        mdatabase.child("Users").child(name).setValue(user);
 
         Toast.makeText(getApplicationContext(),"User Created",Toast.LENGTH_SHORT).show();
         finish();

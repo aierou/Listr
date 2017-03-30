@@ -1,23 +1,19 @@
 package com.victor.project.listr;
 
+import java.util.ArrayList;
+
 /**
- * Created by Seth on 3/29/2017.
+ * Created by Seth on 3/30/2017.
  */
 
 public class List {
-    private String id;
-    private String name;
-    public boolean editable;
-
-    public List(String id, String name, boolean editable){
-        this.id = id;
+    public double latitude;
+    public double longitude;
+    public String name;
+    public List(){}
+    public List(String name, double latitude, double longitude){
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.name = name;
-        this.editable = editable;
-    }
-    public String getName(){
-        return name;
-    }
-    public String getId(){
-        return id;
     }
 }

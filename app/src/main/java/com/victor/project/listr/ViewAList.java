@@ -17,18 +17,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class ViewAList extends AppCompatActivity {
-String username;
     DatabaseReference database1;
     LinearLayout linearLayout;
     int i;
     String header;
+    String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_alist);
         Intent intent = getIntent();
         header = intent.getStringExtra("header");
-        username = intent.getStringExtra("username").concat("~tables");
+        name = intent.getStringExtra("name");
         database1  = FirebaseDatabase.getInstance().getReference();
         linearLayout = (LinearLayout) findViewById(R.id.view_alist);
         i=0;
@@ -37,7 +37,7 @@ String username;
         headText.setTextColor(0xff000000);
         headText.setBackgroundColor(0xffffffff);
         headText.setInputType(96);
-        headText.setText(header);
+        headText.setText(name);
         headText.setTextSize(36);
         headText.setClickable(false);
         headText.setLayoutParams(new LinearLayout.LayoutParams(
@@ -76,7 +76,7 @@ String username;
             }
         };
 
-        database1.child(username).child(header).addValueEventListener(imageListener);
+        database1.child("Lists").child(header).child("items").addValueEventListener(imageListener);
 
 
     }
