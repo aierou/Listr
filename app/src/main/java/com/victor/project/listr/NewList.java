@@ -1,9 +1,6 @@
 package com.victor.project.listr;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.design.widget.BaseTransientBottomBar;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class NewList extends AppCompatActivity {
     int i=0;
@@ -71,16 +69,31 @@ String username;
 
                 final String header = headtext.getText().toString();
 
-            for(i-=1;i>=0;i--){
-                EditText edit = (EditText) findViewById(i);
 
-                String tok = edit.getText().toString();
-                if(!(tok.isEmpty())){
-                list.add(tok);}
-            }
 
-                mdatabase.child(users_headers).child(header).setValue("t");
-                mdatabase.child(users_tables).child(header).setValue(list);
+                //Create our new list in the db
+                List l = new List(header, Globals.latitude, Globals.longitude);
+                DatabaseReference ref = mdatabase.child("Lists").push();
+                ref.setValue(l);
+
+                for(i-=1;i>=0;i--){
+                    EditText edit = (EditText) findViewById(i);
+
+                    String tok = edit.getText().toString();
+                    if(!(tok.isEmpty())){
+                        mdatabase.child("Lists").child(ref.getKey()).child("items").push().setValue(tok);
+                    }
+                }
+
+                //Add our list to the user
+                mdatabase.child("Users").child(Globals.username).child("lists").push().setValue(ref.getKey());
+
+                //Add user to list
+                mdatabase.child("Lists").child(ref.getKey()).child("members").push().setValue(Globals.username);
+//
+//                mdatabase.child("Lists").push().setValue(l).getKey();
+//                mdatabase.child(users_headers).child(header).setValue(l);
+//                mdatabase.child(users_tables).child(header).setValue(list);
                 Intent back = new Intent(NewList.this, MainListActivity.class);
                 back.putExtra("username",intent.getStringExtra("username"));
 

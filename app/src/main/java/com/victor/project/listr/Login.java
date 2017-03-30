@@ -74,7 +74,7 @@ public class Login extends AppCompatActivity {
                 }
 
                 String name = dataSnapshot.getKey();
-                String pass = dataSnapshot.getValue().toString();
+                String pass = dataSnapshot.getValue(User.class).password;
                 if(!(password.getText().toString().equals(pass))){
                     Toast.makeText(getApplicationContext(),"Incorrect password",Toast.LENGTH_SHORT).show();
                     return;
@@ -107,7 +107,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                mdatabase.child("~AllUsers").child(name.getText().toString()).addListenerForSingleValueEvent(usernameListener);
+                mdatabase.child("Users").child(name.getText().toString()).addListenerForSingleValueEvent(usernameListener);
                 // Intent connected = new Intent(MainActivity.this, CameraUIActivity.class);
                 // MainActivity.this.startActivity(connected);
 
