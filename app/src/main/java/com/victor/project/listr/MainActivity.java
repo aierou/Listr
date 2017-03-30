@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,11 +20,12 @@ import com.google.android.gms.location.LocationServices;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class MainListActivity extends AppCompatActivity implements
+public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     ListView list_public;
     ListView list_personal;
@@ -32,6 +34,8 @@ public class MainListActivity extends AppCompatActivity implements
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     SharedPreferences.Editor sEditor;
+    DatabaseReference database1;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,30 +62,27 @@ public class MainListActivity extends AppCompatActivity implements
         publicLists = new ArrayList<>();
         myLists = new ArrayList<>();
         CustomAdapter adapterPublic = new CustomAdapter(publicLists, this);
-        final CustomAdapter adapterPersonal = new CustomAdapter(myLists, this);
+        CustomAdapter adapterPersonal = new CustomAdapter(myLists, this);
         list_public.setAdapter(adapterPublic);
         list_personal.setAdapter(adapterPersonal);
 
-
-
-
         //Public list item selection
-        list_public.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        list_public.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
-            public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
+            public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3){
                 List item = (List) adapter.getItemAtPosition(position);
                 Toast.makeText(getApplicationContext(), item.getName(), Toast.LENGTH_SHORT).show();
             }
         });
 
         //Personal list item selection
-        list_personal.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        list_personal.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
-            public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
+            public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3){
                 List item = (List) adapter.getItemAtPosition(position);
-                Intent viewlist = new Intent(getApplicationContext(), ViewAList.class);
-                viewlist.putExtra("header", item.getId());
-                viewlist.putExtra("username", Globals.username);
+                Intent viewlist = new Intent(getApplicationContext(),ViewAList.class);
+                viewlist.putExtra("header",item.getId());
+                viewlist.putExtra("username",username);
                 startActivity(viewlist);
             }
         });
@@ -94,6 +95,9 @@ public class MainListActivity extends AppCompatActivity implements
             }
         });
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         //Location services
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -103,13 +107,12 @@ public class MainListActivity extends AppCompatActivity implements
                     .build();
         }
 
-
         //Database stuff
-        SharedPreferences preferences = getSharedPreferences("share", 0);
+        SharedPreferences preferences = getSharedPreferences("share",0);
         sEditor = preferences.edit();
         final Intent intent = getIntent();
-        Globals.username = intent.getStringExtra("username");
-        Globals.database = FirebaseDatabase.getInstance().getReference();
+        username = intent.getStringExtra("username");
+        database1  = FirebaseDatabase.getInstance().getReference();
 
         ChildEventListener imageListener = new ChildEventListener() {
             @Override
@@ -117,7 +120,6 @@ public class MainListActivity extends AppCompatActivity implements
 
                 String header = dataSnapshot.getKey();
                 myLists.add(new List(header, header, true));
-                adapterPersonal.notifyDataSetChanged();
             }
 
             @Override
@@ -143,13 +145,28 @@ public class MainListActivity extends AppCompatActivity implements
             }
         };
 
-        Globals.database.child(Globals.username.concat("~headers")).addChildEventListener(imageListener);
+        database1.child(username.concat("~headers")).addChildEventListener(imageListener);
+
+//        //Test data ***
+//        myLists.add(new List(0, "UM staff", true));
+//        myLists.add(new List(0, "UM students", true));
+//        for(int i = 0; i < 10; i++){
+//            publicLists.add(new List(0, "List " + i, false));
+//            myLists.add(new List(0, "List " + i, true));
+//        }
+    }
+
+
+    //When we get data from database
+    public void onLoad(String[] data){
+        for(int i = 0; i < data.length; i++){
+            //Add lists
+            //Create new List with editable true if owner
+        }
     }
 
     public void newList(){
-        Intent newl = new Intent(getApplicationContext(), NewList.class);
-        newl.putExtra("username", Globals.username);
-        startActivity(newl);
+        Toast.makeText(this, "Tapped create list", Toast.LENGTH_SHORT).show();
     }
 
     @Override
