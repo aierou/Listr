@@ -3,5 +3,15 @@
     <string name="title_activity_main_list">Lists</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_new_user">NewUser</string>
+    
+    //Aaron's Strings
+    <string name="app_name">ManageAccountsStub</string>
+    <string name="username">Username</string>
+    <string name="notifications">Notifications:</string>
+    <string name="confirmation">Confirm Changes</string>
+    <string name="passResetTrue">Password Updated</string>
+    <string name="passResetFalse">Password Update Failed</string>
+    <string name="userResetTrue">Username Updated</string>
+    <string name="userResetFalse">Username Update Failed</string>
 
 </resources>
