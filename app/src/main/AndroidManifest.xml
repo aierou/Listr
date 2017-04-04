@@ -31,6 +31,7 @@
         <activity android:name=".ViewAList"></activity>
         <activity android:name=".ManageAccounts"></activity>
         <activity android:name=".PrefMainActivity"></activity>
+        <activity android:name=".view_otherlists"></activity>
     </application>
 
 </manifest>

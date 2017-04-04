@@ -70,7 +70,10 @@ public class MainListActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
                 ListEntity item = (ListEntity) adapter.getItemAtPosition(position);
-                Toast.makeText(getApplicationContext(), item.getName(), Toast.LENGTH_SHORT).show();
+                Intent viewlist = new Intent(getApplicationContext(), view_otherlists.class);
+                viewlist.putExtra("header", item.getId());
+                viewlist.putExtra("name", item.getName());
+                startActivity(viewlist);
             }
         });
 
