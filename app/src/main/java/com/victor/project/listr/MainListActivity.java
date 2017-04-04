@@ -144,7 +144,7 @@ public class MainListActivity extends AppCompatActivity{
             }
         };
 
-        ChildEventListener publicListener = new ChildEventListener() {
+        final ChildEventListener publicListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 List list = dataSnapshot.getValue(List.class);
@@ -160,7 +160,23 @@ public class MainListActivity extends AppCompatActivity{
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                List list = dataSnapshot.getValue(List.class);
+                if(list.is_public){
+                    for(ListEntity l : publicLists){
+                        if(l.getId().equals(dataSnapshot.getKey())){
+                            return;
+                        }
+                    }
+                    publicLists.add(new ListEntity(dataSnapshot.getKey(), list.name, false));
+                    adapterPublic.notifyDataSetChanged();
+                }else{
+                    for(ListEntity l : publicLists){
+                        if(l.getId().equals(dataSnapshot.getKey())){
+                            publicLists.remove(l);
+                            adapterPublic.notifyDataSetChanged();
+                        }
+                    }
+                }
             }
 
             @Override

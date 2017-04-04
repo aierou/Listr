@@ -67,23 +67,6 @@ String username;
 
             @Override
             public void onClick(View v) {
-                TrackGPS gps = new TrackGPS(NewList.this);
-
-
-                if(gps.canGetLocation()){
-
-
-                    double longitude = gps.getLongitude();
-                    double latitude = gps.getLatitude();
-
-                    Toast.makeText(getApplicationContext(),"Longitude:"+Double.toString(longitude)+"\nLatitude:"+Double.toString(latitude),Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-
-                    gps.showSettingsAlert();
-                    return;
-                }
 
                 final String header = headtext.getText().toString();
 

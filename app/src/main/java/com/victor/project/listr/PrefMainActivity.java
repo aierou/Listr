@@ -74,6 +74,8 @@ public class PrefMainActivity extends AppCompatActivity {
                     RadioButton r = (RadioButton) findViewById(R.id.PrivateButton);
                     r.setChecked(true);
                 }
+                latitude = dataSnapshot.child("latitude").getValue(double.class);
+                longitude = dataSnapshot.child("longitude").getValue(double.class);
             }
 
             @Override
@@ -215,19 +217,12 @@ public class PrefMainActivity extends AppCompatActivity {
         }else if(PrivateButton){
             databaseReference.child("Lists").child(listId).child("is_public").setValue(false);
         }
+        databaseReference.child("Lists").child(listId).child("latitude").setValue(latitude);
+        databaseReference.child("Lists").child(listId).child("longitude").setValue(longitude);
         Intent i = new Intent(PrefMainActivity.this, ViewAList.class);
         i.putExtra("header", listId);
         i.putExtra("name", listName);
         PrefMainActivity.this.startActivity(i);
         finish();
-
-        //sends the db to the server.
-        String key = databaseReference.child("list_prefs").push().getKey();
-        PrefUpdateMessage post = new PrefUpdateMessage(EditButton, AddButton, DeleteButton
-                , PrivateButton, PublicButton, YesButton, NoButton, latitude, longitude);
-        Map<String, Object> postValues = post.toMap();
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/list_prefs/" + key, postValues);
-        databaseReference.updateChildren(childUpdates);
     }
 }
