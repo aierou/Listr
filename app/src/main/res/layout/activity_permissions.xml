@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.victor.project.listr.PrefMainActivity">
+
+    <TextView
+        android:id="@+id/User"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="33dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/User"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="42dp"
+        tools:layout_editor_absoluteY="45dp" />
+
+    <TextView
+        android:id="@+id/Visibility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/User"
+        android:layout_alignBottom="@+id/User"
+        android:layout_toEndOf="@+id/AllowJoinReq"
+        android:layout_toRightOf="@id/AllowJoinReq"
+        android:text="@string/Visibility"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="223dp"
+        tools:layout_editor_absoluteY="45dp" />
+    <TextView
+        android:id="@+id/AllowJoinReq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/UserRadioGroup"
+        android:layout_alignStart="@+id/UserRadioGroup"
+        android:layout_below="@+id/UserRadioGroup"
+        android:layout_marginTop="40dp"
+        android:text="@string/AllowJoinReq"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/UserRadioGroup"
+        android:layout_below="@+id/User"
+        android:layout_alignLeft="@+id/User"
+        android:layout_alignStart="@+id/User">
+        <RadioButton
+            android:id="@+id/EditButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onUserRadioButtonClicked"
+            android:text="@string/Edit"
+            android:textSize="12sp"
+            android:visibility="visible"
+            tools:layout_editor_absoluteX="42dp"
+            tools:layout_editor_absoluteY="98dp" />
+        <RadioButton
+            android:id="@+id/AddButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onUserRadioButtonClicked"
+            android:text="@string/Add"
+            android:textSize="12sp"
+            android:visibility="visible"
+            tools:layout_editor_absoluteX="42dp"
+            tools:layout_editor_absoluteY="141dp" />
+        <RadioButton
+            android:id="@+id/DeleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onUserRadioButtonClicked"
+            android:text="@string/Delete"
+            android:textSize="12sp"
+            android:visibility="visible"
+            tools:layout_editor_absoluteX="42dp"
+            tools:layout_editor_absoluteY="184dp" />
+    </RadioGroup>
+    <RadioGroup
+        android:id="@+id/VisibilityRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Visibility"
+        android:layout_alignLeft="@+id/Visibility"
+        android:layout_alignStart="@+id/Visibility">
+        <RadioButton
+            android:id="@+id/PrivateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onVisibilityRadioButtonClicked"
+            android:text="@string/Private"
+            android:textSize="12sp"
+            android:visibility="visible"
+            tools:layout_editor_absoluteX="223dp"
+            tools:layout_editor_absoluteY="98dp" />
+        <RadioButton
+            android:id="@+id/PublicButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onVisibilityRadioButtonClicked"
+            android:text="@string/Public"
+            android:textSize="12sp"
+            android:visibility="visible"
+            tools:layout_editor_absoluteX="223dp"
+            tools:layout_editor_absoluteY="141dp" />
+    </RadioGroup>
+    <RadioGroup
+        android:id="@+id/AllowJoinReqRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/AllowJoinReq"
+        android:layout_alignLeft="@id/AllowJoinReq"
+        android:layout_alignStart="@id/AllowJoinReq">
+        <RadioButton
+            android:id="@+id/YesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onAllowJoinReqButtonClicked"
+            android:text="@string/Yes"
+            android:textSize="12sp" />
+        <RadioButton
+            android:id="@+id/NoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onAllowJoinReqButtonClicked"
+            android:text="@string/No"
+            android:textSize="12sp" />
+    </RadioGroup>
+
+    <ImageButton
+        android:id="@+id/AcceptButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/CancelButton"
+        android:layout_alignEnd="@+id/Visibility"
+        android:layout_alignRight="@+id/Visibility"
+        android:layout_alignTop="@+id/CancelButton"
+        android:contentDescription="@string/Accept"
+        android:visibility="visible"
+        app:srcCompat="@android:drawable/checkbox_on_background" />
+
+    <ImageButton
+        android:id="@+id/CancelButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="11dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:contentDescription="@string/Cancel"
+        android:visibility="visible"
+        app:srcCompat="@android:drawable/btn_dialog" />
+
+    <ImageButton
+        android:id="@+id/getLocation"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="@string/GetLocation"
+        app:srcCompat="@android:drawable/ic_menu_mapmode"
+        android:layout_below="@+id/Location"
+        android:layout_alignLeft="@+id/Location"
+        android:layout_alignStart="@+id/Location" />
+
+    <TextView
+        android:id="@+id/Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/AllowJoinReqRadioGroup"
+        android:layout_alignStart="@+id/AllowJoinReqRadioGroup"
+        android:layout_below="@+id/AllowJoinReqRadioGroup"
+        android:layout_marginTop="51dp"
+        android:text="@string/Location"
+        android:textSize="18sp" />
+
+</RelativeLayout>

@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.haunt.manageaccountsstub.ManageAccounts">
+    tools:context="com.victor.project.listr.ManageAccounts">
 
-    <EditText
+    <TextView
         android:id="@+id/usernameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +19,9 @@
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <EditText
         android:id="@+id/enterPassEditText"
@@ -34,7 +36,9 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.503" />
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Password" />
 
     <EditText
         android:id="@+id/confirmPassEditText"
@@ -48,31 +52,10 @@
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="25dp"
-        app:layout_constraintTop_toBottomOf="@+id/enterPassEditText" />
-
-    <TextView
-        android:id="@+id/notifyTextView"
-        android:layout_width="169dp"
-        android:layout_height="30dp"
-        android:ems="10"
-        android:textSize="20sp"
-        android:text="@string/notifications"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/notifyRButton"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="33dp"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPassEditText"
-        app:layout_constraintHorizontal_bias="0.653" />
-
-    <RadioButton
-        android:id="@+id/notifyRButton"
-        android:layout_width="29dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPassEditText"
-        android:layout_marginEnd="72dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/enterPassEditText"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Confirm Password" />
 
     <Button
         android:id="@+id/confirmAccountChangesButton"
@@ -85,6 +68,8 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
 </android.support.constraint.ConstraintLayout>

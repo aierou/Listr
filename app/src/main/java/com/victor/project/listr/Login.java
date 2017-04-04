@@ -39,6 +39,8 @@ public class Login extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Globals.gps = new TrackGPS(getApplicationContext());
+
         super.onCreate(savedInstanceState);
         SharedPreferences preferences = getSharedPreferences("share",0);
         sEditor = preferences.edit();
@@ -46,7 +48,7 @@ public class Login extends AppCompatActivity {
         if(skip){
             String skipName = preferences.getString("username", "");
             Intent skipinfo = new Intent(Login.this, MainListActivity.class);
-            skipinfo.putExtra("username", skipName);
+            Globals.username = skipName;
             Login.this.startActivity(skipinfo);
             finish();
 
@@ -88,7 +90,7 @@ public class Login extends AppCompatActivity {
                 sEditor.putString("username",name);
                 sEditor.commit();
                 Intent userinfo = new Intent(Login.this, MainListActivity.class);
-                userinfo.putExtra("username", name);
+                Globals.username = name;
                 Login.this.startActivity(userinfo);
                 finish();
 
@@ -126,6 +128,4 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-
-
 }

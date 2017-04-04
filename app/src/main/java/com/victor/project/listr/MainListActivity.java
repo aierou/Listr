@@ -13,9 +13,6 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,18 +23,18 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class MainListActivity extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MainListActivity extends AppCompatActivity{
     ListView list_public;
     ListView list_personal;
     ArrayList<ListEntity> publicLists;
     ArrayList<ListEntity> myLists;
-    GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     SharedPreferences.Editor sEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println(Globals.gps.getLatitude() + " " + Globals.gps.getLongitude());
+        //Toast.makeText(getApplicationContext(),Globals.gps.getLatitude() + " " + Globals.gps.getLongitude(), Toast.LENGTH_LONG);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_list);
 
@@ -97,21 +94,9 @@ public class MainListActivity extends AppCompatActivity implements
             }
         });
 
-        //Location services
-        if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-        }
-
-
         //Database stuff
         SharedPreferences preferences = getSharedPreferences("share", 0);
         sEditor = preferences.edit();
-        final Intent intent = getIntent();
-        Globals.username = intent.getStringExtra("username");
         Globals.database = FirebaseDatabase.getInstance().getReference();
 
         //Get private lists
@@ -160,8 +145,11 @@ public class MainListActivity extends AppCompatActivity implements
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 List list = dataSnapshot.getValue(List.class);
-                if(list.latitude-1<Globals.latitude && list.latitude+1>Globals.latitude
-                        && list.longitude-1<Globals.longitude && list.longitude+1>Globals.longitude){
+                double lat = Globals.gps.getLatitude();
+                double lng = Globals.gps.getLongitude();
+                if(list.latitude-1<lat && list.latitude+1>lat
+                        && list.longitude-1<lng && list.longitude+1>lng
+                        && list.is_public){
                     publicLists.add(new ListEntity(dataSnapshot.getKey(), list.name, false));
                     adapterPublic.notifyDataSetChanged();
                 }
@@ -195,6 +183,11 @@ public class MainListActivity extends AppCompatActivity implements
         Globals.database.child("Lists").addChildEventListener(publicListener);
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
+
     public void newList(){
         Intent newl = new Intent(getApplicationContext(), NewList.class);
         newl.putExtra("username", Globals.username);
@@ -216,46 +209,13 @@ public class MainListActivity extends AppCompatActivity implements
                 Intent outIntent = new Intent(getApplicationContext(),Login.class);
                 startActivity(outIntent);
                 return true;
+            case R.id.menu_account:
+                Intent i = new Intent(getApplicationContext(),ManageAccounts.class);
+                startActivity(i);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
 
         }
-    }
-
-    //Location services methods
-    protected void onStart() {
-        mGoogleApiClient.connect();
-        super.onStart();
-    }
-
-    protected void onStop() {
-        mGoogleApiClient.disconnect();
-        super.onStop();
-    }
-
-    @Override
-    public void onConnected(Bundle connectionHint) {
-        try {
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-            if (mLastLocation != null) {
-                double lat = mLastLocation.getLatitude();
-                double lng = mLastLocation.getLongitude();
-                Globals.latitude = lat;
-                Globals.longitude = lng;
-                //Make request to database for public lists and populate
-            }
-        }catch(SecurityException e){
-            //Request permissions or fail silently
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int cause){
-        //Don't care
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult result){
-        //Don't care
     }
 }

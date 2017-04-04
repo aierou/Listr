@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -66,13 +67,30 @@ String username;
 
             @Override
             public void onClick(View v) {
+                TrackGPS gps = new TrackGPS(NewList.this);
+
+
+                if(gps.canGetLocation()){
+
+
+                    double longitude = gps.getLongitude();
+                    double latitude = gps.getLatitude();
+
+                    Toast.makeText(getApplicationContext(),"Longitude:"+Double.toString(longitude)+"\nLatitude:"+Double.toString(latitude),Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+
+                    gps.showSettingsAlert();
+                    return;
+                }
 
                 final String header = headtext.getText().toString();
 
 
 
                 //Create our new list in the db
-                List l = new List(header, Globals.latitude, Globals.longitude);
+                List l = new List(header, Globals.gps.getLatitude(), Globals.gps.getLongitude());
                 DatabaseReference ref = mdatabase.child("Lists").push();
                 ref.setValue(l);
 

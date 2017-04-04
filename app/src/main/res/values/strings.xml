@@ -3,9 +3,6 @@
     <string name="title_activity_main_list">Lists</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_new_user">NewUser</string>
-    
-    //Aaron's Strings
-    <string name="app_name">ManageAccountsStub</string>
     <string name="username">Username</string>
     <string name="notifications">Notifications:</string>
     <string name="confirmation">Confirm Changes</string>
@@ -13,5 +10,19 @@
     <string name="passResetFalse">Password Update Failed</string>
     <string name="userResetTrue">Username Updated</string>
     <string name="userResetFalse">Username Update Failed</string>
+    <string name="User">User</string>
+    <string name="Edit">Edit</string>
+    <string name="Add">Add</string>
+    <string name="Delete">Delete</string>
+    <string name="Visibility">Visibility</string>
+    <string name="Public">Public</string>
+    <string name="Private">Private</string>
+    <string name="AllowJoinReq">Allow Join Request</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="Accept">Accept</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Location">Get Your Location</string>
+    <string name="GetLocation">GetLocation</string>
 
 </resources>

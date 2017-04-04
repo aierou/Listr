@@ -10,6 +10,7 @@ public class List {
     public double latitude;
     public double longitude;
     public String name;
+    public boolean is_public = false;
     public List(){}
     public List(String name, double latitude, double longitude){
         this.latitude = latitude;

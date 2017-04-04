@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.victor.project.listr">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,7 +29,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".NewList" />
         <activity android:name=".ViewAList"></activity>
+        <activity android:name=".ManageAccounts"></activity>
+        <activity android:name=".PrefMainActivity"></activity>
     </application>
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 </manifest>

@@ -15,8 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 public abstract class Globals {
     public static DatabaseReference database;
     public static String username;
-    public static double latitude = 0;
-    public static double longitude = 0;
+    public static TrackGPS gps;
 
     //Remove reference from each user
     public static void deleteList(final String id){

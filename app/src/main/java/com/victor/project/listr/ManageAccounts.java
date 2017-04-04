@@ -1,3 +1,5 @@
+package com.victor.project.listr;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.PersistableBundle;
@@ -26,21 +28,22 @@ import java.util.EventListener;
 import java.util.Map;
 import java.util.Set;
 
+import static com.victor.project.listr.Globals.username;
+
 public class ManageAccounts extends AppCompatActivity {
 
     Button confirmButton;
-    EditText userField;
+    TextView userField;
     EditText passField1;
     EditText passField2;
-    User user = firebase.auth().currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_accounts);
-
         confirmButton = (Button) findViewById(R.id.confirmAccountChangesButton);
-        userField = (EditText) findViewById(R.id.usernameEditText);
+        userField = (TextView) findViewById(R.id.usernameEditText);
+        userField.setText(Globals.username);
         passField1 = (EditText) findViewById(R.id.enterPassEditText);
         passField2 = (EditText) findViewById(R.id.confirmPassEditText);
     }
@@ -48,39 +51,15 @@ public class ManageAccounts extends AppCompatActivity {
     public void confirmButtonHandler(View v) {
         Toast toast;
 
-        if(((passField1.getText().toString() != null )|| (passField2.getText().toString()) != null))
+        if(!passField1.getText().toString().equals("") && !passField2.getText().toString().equals("")
+                && passField1.getText().toString().equals(passField2.getText().toString()))
         {
-            if((passField1.getText().toString().equals(passField2.getText().toString()))) {
-                user.updatePassword(newPassword).then(function()
-                {
-                    toast = Toast.makeText(getApplicationContext(), getString(R.string.passResetTrue), Toast.LENGTH_SHORT);
-                    toast.show();
-                },function(error) {
-                    toast = Toast.makeText(getApplicationContext(), getString(R.string.passResetFalse), Toast.LENGTH_SHORT);
-                    toast.show();
-                });
-
-            }
-        }
-
-        if(userField.getText().toString() != null)
-        {
-            user.updateProfile(
-                {
-                    displayName: "Jane Q. User",
-                    photoURL: "https://example.com/jane-q-user/profile.jpg"
-                }).then(function()
-                    {
-                        toast = Toast.makeText(getApplicationContext(), getString(R.string.userResetTrue), Toast.LENGTH_SHORT);
-                        toast.show();
-                    },
-                function(error)
-                    {
-                        toast = Toast.makeText(getApplicationContext(), getString(R.string.userResetFalse), Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-                );
-
+            Globals.database.child("Users").child(Globals.username).child("password").setValue(passField1.getText().toString());
+            finish();
+        }else{
+            passField1.setText("");
+            passField2.setText("");
+            Toast.makeText(getApplicationContext(),"Passwords do not match",Toast.LENGTH_SHORT).show();
         }
     }
 }
